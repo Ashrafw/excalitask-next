@@ -16,6 +16,7 @@ const TaskWithSubItem = ({
   isFinishEdit,
   setIsFinishEdit,
   isThisTheEditedTask,
+  isLastItem,
 }: {
   task: taskType;
   mainTaskId: string;
@@ -25,6 +26,7 @@ const TaskWithSubItem = ({
   isFinishEdit: boolean;
   setIsFinishEdit: React.Dispatch<React.SetStateAction<boolean>>;
   isThisTheEditedTask: boolean;
+  isLastItem: boolean;
 }) => {
   const [titleEdit, setTitleEdit] = useState(task.title);
   const { tasksMain, setTaskMain } = usePersistStore();
@@ -140,12 +142,9 @@ const TaskWithSubItem = ({
           )}
         </div>
       </div>
-      <div
-        className="flex flex-col ml-8 p-2 py-0 gap-1 border-l text-[16px] "
-        ref={animationChild}
-      >
+      <div className="flex flex-col ml-8 p-0  border-l text-[16px] " ref={animationChild}>
         {isDropDown
-          ? task.subTaskList?.map((item) => (
+          ? task.subTaskList?.map((item, i) => (
               <SubItem
                 key={item.id}
                 subTask={item}
@@ -157,6 +156,7 @@ const TaskWithSubItem = ({
                 editTaskId={editTaskId}
                 doesItHaveSubtasks={task.isSubtask}
                 isThisTheEditedTask={isThisTheEditedTask}
+                isLastSubItem={task.subTaskList.length === i + 1}
               />
             ))
           : null}

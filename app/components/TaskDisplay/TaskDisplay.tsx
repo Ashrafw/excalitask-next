@@ -98,8 +98,8 @@ const TaskDisplay = ({
           </div>
         )}
 
-        <div className="flex flex-col text-[18px] gap-1 p-2 py-2" ref={animationParent}>
-          {task.taskList?.map((item) => {
+        <div className="flex flex-col text-[18px]  p-2 py-2" ref={animationParent}>
+          {task.taskList?.map((item, i) => {
             return item?.isSubtask ? (
               <TaskWithSubItem
                 key={item.id}
@@ -111,6 +111,7 @@ const TaskDisplay = ({
                 isFinishEdit={isFinishEdit}
                 setIsFinishEdit={setIsFinishEdit}
                 isThisTheEditedTask={isThisTheEditedTask}
+                isLastItem={task.taskList.length === i + 1}
               />
             ) : (
               <TaskItem
@@ -123,6 +124,7 @@ const TaskDisplay = ({
                 isFinishEdit={isFinishEdit}
                 setIsFinishEdit={setIsFinishEdit}
                 isThisTheEditedTask={isThisTheEditedTask}
+                isLastItem={task.taskList.length === i + 1}
               />
             );
           })}

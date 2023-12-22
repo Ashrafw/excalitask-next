@@ -14,6 +14,7 @@ const SubItem = ({
   actualTask,
   doesItHaveSubtasks,
   isThisTheEditedTask,
+  isLastSubItem,
 }: {
   subTask: SubTaskType;
   mainTaskId: string;
@@ -24,6 +25,7 @@ const SubItem = ({
   actualTask: taskType;
   doesItHaveSubtasks: boolean;
   isThisTheEditedTask: boolean;
+  isLastSubItem: boolean;
 }) => {
   const [titleSubEdit, setTitleSubEdit] = useState(subTask.title);
   const { tasksMain, setTaskMain } = usePersistStore();
@@ -118,7 +120,16 @@ const SubItem = ({
   };
 
   return (
-    <div className="flex gap-2 items-center h-[38px] justify-center px-2 py-1  border-b hover:bg-slate-400 hover:bg-opacity-10 ">
+    <div
+      className={`flex gap-2 items-center h-[38px] px-2  hover:bg-slate-400 hover:bg-opacity-10  ${
+        isLastSubItem ? "" : " border-b"
+      }`}
+      onClick={() =>
+        !(isFinishEdit && isThisTheEditedTask)
+          ? updateTaskCompletion(!subTask.isComplete)
+          : null
+      }
+    >
       {isFinishEdit && isThisTheEditedTask ? (
         <>
           <button
@@ -135,19 +146,23 @@ const SubItem = ({
           />
         </>
       ) : (
-        <>
+        <div className="flex gap-2 items-center w-full cursor-pointer ">
           <div className="flex items-center justify-center w-[30px] h-[30px] mr-[10px] ">
             <input
               type="checkbox"
-              className=" mt-1 ml-1 p-0 m-0"
+              className=" h-[14px] w-[14px] mt-1 ml-1 p-0 m-0 accent-slate-600"
               checked={subTask.isComplete}
-              onChange={(e: any) => updateTaskCompletion(e.target.checked)}
+              // onChange={(e: any) => updateTaskCompletion(e.target.checked)}
             />
           </div>
-          <label className="w-full text-medium text text-gray-00 py-[2px] ">
+          <label
+            className={`w-full cursor-pointer text-medium text text-gray-00 py-[2px]  ${
+              subTask.isComplete ? " decoration-slate-800 text-gray-900/25" : " "
+            } `}
+          >
             {subTask.title}
           </label>
-        </>
+        </div>
       )}
     </div>
   );

@@ -12,6 +12,7 @@ const TaskItem = ({
   isFinishEdit,
   setIsFinishEdit,
   isThisTheEditedTask,
+  isLastItem,
 }: {
   task: taskType;
   mainTaskId: string;
@@ -21,6 +22,7 @@ const TaskItem = ({
   isFinishEdit: boolean;
   setIsFinishEdit: React.Dispatch<React.SetStateAction<boolean>>;
   isThisTheEditedTask: boolean;
+  isLastItem: boolean;
 }) => {
   const [titleEdit, setTitleEdit] = useState(task.title);
   const { tasksMain, setTaskMain } = usePersistStore();
@@ -81,7 +83,14 @@ const TaskItem = ({
   };
 
   return (
-    <div className="flex gap-2 items-center py-[6px] px-2 border-b border-opacity-5 h-[43px] hover:bg-slate-400 hover:bg-opacity-10 ">
+    <div
+      className={`flex gap-2 items-center py-[6px] px-2  cursor-pointer border-opacity-5 h-[43px] hover:bg-slate-400 hover:bg-opacity-10 border-b`}
+      onClick={() =>
+        !(isFinishEdit && isThisTheEditedTask)
+          ? updateTaskCompletion(!task.isComplete)
+          : null
+      }
+    >
       {isFinishEdit && isThisTheEditedTask ? (
         <>
           <button
@@ -100,15 +109,21 @@ const TaskItem = ({
       ) : (
         <>
           {/* <input type="checkbox" className=" m-2 my-[9px]" /> */}
-          <div className="flex items-center justify-center w-[30px] h-[30px] mr-[13px] ">
+          <div className="flex items-center  cursor-pointer justify-center w-[30px] h-[30px] mr-[13px] ">
             <input
               type="checkbox"
-              className=" mt-1 ml-1 p-0 m-0"
+              className={` h-4 w-4 mt-1 ml-1 p-0 m-0 accent-slate-600`}
               checked={task.isComplete}
-              onChange={(e: any) => updateTaskCompletion(e.target.checked)}
+              // onChange={(e: any) => updateTaskCompletion(e.target.checked)}
             />
           </div>
-          <label className="w-full text-medium text-gray-900 ">{task.title}</label>
+          <label
+            className={`w-full text-medium cursor-pointer  text-gray-900  ${
+              task.isComplete ? "  decoration-slate-800 text-gray-900/25" : " "
+            } `}
+          >
+            {task.title}
+          </label>
         </>
       )}
     </div>
