@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import TaskWithSubItem from "./TaskWithSubItem";
 import TaskItem from "./TaskItem";
 import { MainTaskType, usePersistStore } from "@/app/lib/zustand";
-import { IoIosExpand } from "react-icons/io";
-import { HiMiniArrowsPointingIn } from "react-icons/hi2";
 import { MdOutlineMoreVert } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { IoMdReturnLeft } from "react-icons/io";

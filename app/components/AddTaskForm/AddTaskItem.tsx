@@ -3,23 +3,9 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
 import { FaChevronUp } from "react-icons/fa6";
 import { FaChevronDown } from "react-icons/fa6";
-import { PiArrowElbowRightDownFill } from "react-icons/pi";
 import { FaPlus } from "react-icons/fa6";
 import { SubTaskType, taskType } from "@/app/lib/zustand";
 
-// type SubTaskType = {
-//   id: string;
-//   title: string;
-//   isComplete: boolean;
-//   isSubtask: boolean;
-// };
-// type taskType = {
-//   id: string;
-//   title: string;
-//   isComplete: boolean;
-//   subTaskList: SubTaskType[];
-//   isSubtask: boolean;
-// };
 type AddTaskItemType = {
   actualTask: taskType;
   subTaskList: SubTaskType[];
@@ -128,8 +114,6 @@ const AddTaskItem = ({
           <>
             <div className=" pl-8 mt-2 flex flex-col gap-1 ">
               {actualTask.subTaskList?.map((item, index) => (
-                //   <AddModalTaskItem key={item.id} item={item} />
-                // <div className="pl-8" key={item.id}>
                 <div
                   key={item.id}
                   className="border-2 p-1 flex justify-between bg-gray-100 px-4 w-full rounded "
@@ -141,13 +125,9 @@ const AddTaskItem = ({
                     >
                       <FaRegTrashAlt />
                     </button>{" "}
-                    <h1 className=" w-[70%] text-sm flex gap-1">
-                      {/* <strong className="">{index + 1}. </strong> */}
-                      {item?.title}
-                    </h1>
+                    <h1 className=" w-[70%] text-sm flex gap-1">{item?.title}</h1>
                   </div>
                 </div>
-                // </div>
               ))}
             </div>
             <div className="pl-8 ">

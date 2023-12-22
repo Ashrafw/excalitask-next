@@ -9,7 +9,6 @@ import { capitalizeFirstLetter } from "@/app/helper/helper";
 type AddTaskItemType = {
   actualTask: taskType;
   subTaskList: SubTaskType[];
-  //   focusedMain: boolean;
   index: number;
   setTaskList: React.Dispatch<React.SetStateAction<taskType[]>>;
 };
@@ -111,8 +110,6 @@ const AddSingleSubTask = ({
       <div>
         <div className=" pl-8  flex flex-col gap-1 ">
           {actualTask.subTaskList?.map((item, index) => (
-            //   <AddModalTaskItem key={item.id} item={item} />
-            // <div className="pl-8" key={item.id}>
             <div
               key={item.id}
               className={`shadow p-1 flex justify-between bg-white px-4 w-full rounded ${
@@ -132,7 +129,6 @@ const AddSingleSubTask = ({
                 </h1>
               </div>
             </div>
-            // </div>
           ))}
           <div>
             {openSubtask && (
