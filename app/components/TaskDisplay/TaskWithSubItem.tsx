@@ -64,13 +64,11 @@ const TaskWithSubItem = ({
         return taskInner;
       }
     });
-    console.log("newTask", newTask);
     setTaskMain(newTask);
   };
   const updateTaskCompletion = (targetComplete: boolean) => {
     const newTask = tasksMain.map((taskInner) => {
       if (taskInner.id === mainTaskId) {
-        console.log("1");
         // Update the tasklist for the specific object
         const taskListInner = taskInner.taskList.map((item) => {
           if (item.id === task.id) {
