@@ -87,18 +87,16 @@ const AddTaskItem = ({
   };
 
   return (
-    <div className="shadow rounded-2xl py-1 bg-gray-200 px-4 w-full flex flex-col ">
+    <div className="border rounded py-1 bg-gray-100 px-4 w-full flex flex-col ">
       <div className="flex justify-between items-center ">
         <div className="flex items-center">
           <button
             onClick={deleteTask}
-            className="  bg-opacity-50 text-gray-400 text-md p-1 rounded-md  "
+            className="  bg-opacity-50 text-gray-400 text-md p-1 rounded-md mr-1 "
           >
             <FaRegTrashAlt />
           </button>{" "}
-          <h1 className="ml-2 w-[70%]">
-            <strong className="mr-1">{index}. </strong> {actualTask.title}
-          </h1>
+          <h1 className="ml-2 w-[70%]">{actualTask.title}</h1>
         </div>
 
         {actualTask.subTaskList?.length > 0 ? (
@@ -134,17 +132,17 @@ const AddTaskItem = ({
                 // <div className="pl-8" key={item.id}>
                 <div
                   key={item.id}
-                  className="shadow p-1 flex justify-between bg-gray-100 px-4 w-full rounded-full"
+                  className="border-2 p-1 flex justify-between bg-gray-100 px-4 w-full rounded "
                 >
                   <div className="flex gap-2 ">
                     <button
                       onClick={() => deleteSubTask(item.id)}
-                      className="  bg-opacity-50 text-gray-400 text-md  rounded-md  "
+                      className="  bg-opacity-50 text-gray-400 text-md  rounded-md mr-2  "
                     >
                       <FaRegTrashAlt />
                     </button>{" "}
                     <h1 className=" w-[70%] text-sm flex gap-1">
-                      <strong className="">{index + 1}. </strong>
+                      {/* <strong className="">{index + 1}. </strong> */}
                       {item?.title}
                     </h1>
                   </div>
@@ -155,21 +153,21 @@ const AddTaskItem = ({
             <div className="pl-8 ">
               {(openSubtask || !false) && (
                 <form onSubmit={handleSubmitSubTask}>
-                  <div className=" flex items-center ">
+                  <div className=" flex items-center gap-1 ">
                     <input
                       required
                       type="text"
                       placeholder="Enter subtask"
-                      className="shadow  py-1 px-4 w-full my-2  text-sm rounded-full"
+                      className=" border-2  py-1 px-4 w-full my-2 text-sm rounded"
                       value={subTaskTitle}
                       onFocus={onFocus}
                       onBlur={onBlur}
                       autoFocus={focused}
                       onChange={(e) => setSubTaskTitle(e.target.value)}
                     />
-                    {/* <button className=" bg-gray-800 w-[40px] text-gray-100 text-sm p-2  rounded-md  ">
-                          +
-                        </button> */}
+                    <button className=" bg-gray-700 w-[40px] text-gray-100 text-sm p-1 rounded h-[30px]  ">
+                      +
+                    </button>
                   </div>
                 </form>
               )}

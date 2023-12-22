@@ -5,6 +5,7 @@ import { MdModeEdit } from "react-icons/md";
 import { v4 as uuidv4 } from "uuid";
 import { taskType, usePersistStore } from "@/app/lib/zustand";
 import AddSingleSubTask from "./AddSingleSubTask";
+import { FaPlus } from "react-icons/fa6";
 
 const AddSingleTask = ({
   taskId,
@@ -50,41 +51,48 @@ const AddSingleTask = ({
   };
 
   return (
-    <div className="  p-2 border-2 border-slate-700 rounded-2xl flex flex-col gap-2">
-      <div className="flex flex-col gap-2">
-        {taskList.map((item, index) => (
-          <AddSingleSubTask
-            key={item.id}
-            actualTask={item}
-            subTaskList={item.subTaskList}
-            index={index + 1}
-            setTaskList={setTaskList}
+    <div className="  p-2 border-2 bg-slate-600 rounded-lg flex flex-col gap-2">
+      <div className="flex flex-col gap-2 bg-white p-2 rounded">
+        {taskList.length > 0 && (
+          <div className="flex flex-col gap-2">
+            {taskList.map((item, index) => (
+              <AddSingleSubTask
+                key={item.id}
+                actualTask={item}
+                subTaskList={item.subTaskList}
+                index={index + 1}
+                setTaskList={setTaskList}
+              />
+            ))}
+          </div>
+        )}
+        <form className=" mt-2 flex items-center gap-1 " onSubmit={handleSubmitTask}>
+          <input
+            //   ref={searchInput}
+            //   onFocus={onFocus}
+            //   onBlur={onBlur}
+            required
+            type="text"
+            placeholder="Enter task"
+            // className="shadow rounded-full p-1  px-4 w-full"
+            className="border rounded p-2 px-4 w-full"
+            autoFocus
+            value={taskTitle}
+            onChange={(e) => setTaskTitle(e.target.value)}
           />
-        ))}
+          <button className=" bg-gray-700 w-[40px] text-gray-100 text-lg p-1 rounded h-[40px]  ">
+            +
+          </button>
+        </form>
       </div>
-      <form onSubmit={handleSubmitTask}>
-        <input
-          //   ref={searchInput}
-          //   onFocus={onFocus}
-          //   onBlur={onBlur}
-          required
-          type="text"
-          placeholder="Enter task"
-          className="shadow rounded-full p-1  px-4 w-full"
-          autoFocus
-          value={taskTitle}
-          onChange={(e) => setTaskTitle(e.target.value)}
-        />
-        {/* <button className=" bg-gray-800 w-[40px] text-gray-100 text-xl p-2 rounded-md  ">
-                    +
-                  </button> */}
-      </form>
       <form onSubmit={handleSubmitAll}>
         <button
           // onClick={() => setNumArr((prev) => [...prev, mainTaskTemplate])}
-          className=" w-full bg-gray-300 rounded-md p-1 mt-4"
+          className=" w-full bg-gray-50 rounded-md p-1 mt-2 flex justify-center items-center gap-2"
         >
-          Save
+          <div className="flex justify-center items-center  px-4 rounded">
+            <p>Save</p>
+          </div>
         </button>
       </form>
     </div>

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 
 const TaskItem = ({
   task,
+  mainTaskId,
   isEditMode,
   editTaskId,
   setEditTaskId,
@@ -13,6 +14,7 @@ const TaskItem = ({
   isThisTheEditedTask,
 }: {
   task: taskType;
+  mainTaskId: string;
   isEditMode: boolean;
   editTaskId: string;
   setEditTaskId: React.Dispatch<React.SetStateAction<string>>;
@@ -22,7 +24,6 @@ const TaskItem = ({
 }) => {
   const [titleEdit, setTitleEdit] = useState(task.title);
   const { tasksMain, setTaskMain } = usePersistStore();
-
   useEffect(() => {
     setTimeout(() => {
       if (task.title !== titleEdit) {
@@ -60,28 +61,57 @@ const TaskItem = ({
     console.log("newTask", newTask);
     setTaskMain(newTask);
   };
+  const updateTaskCompletion = (targetComplete: boolean) => {
+    const newTask = tasksMain.map((taskInner) => {
+      if (taskInner.id === mainTaskId) {
+        console.log("1");
+        // Update the tasklist for the specific object
+        const taskListInner = taskInner.taskList.map((item) => {
+          if (item.id === task.id) {
+            return { ...item, isComplete: targetComplete };
+          } else {
+            return item;
+          }
+        });
+        return { ...taskInner, taskList: taskListInner };
+      } else {
+        return taskInner;
+      }
+    });
+    console.log("newTask", newTask);
+
+    setTaskMain(newTask);
+  };
 
   return (
-    <div className="flex gap-2 items-center  px-4 py-2 border-b border-t rounded-lg border-opacity-5  cursor-pointer hover:bg-slate-400 hover:bg-opacity-10 ">
+    <div className="flex gap-2 items-center py-[6px] px-2 border-b border-opacity-5 h-[43px] hover:bg-slate-400 hover:bg-opacity-10 ">
       {isFinishEdit && isThisTheEditedTask ? (
-        <div className="flex gap-2 items-center">
+        <>
           <button
             onClick={() => handleDeleteTask(task.id)}
-            className="  bg-opacity-50 text-gray-400 text-sm rounded-md  "
+            className="flex items-center justify-center w-[30px] h-[30px] text-sm  text-gray-400 p-2  rounded bg-gray-200 hover:bg-gray-300  "
           >
             <FaRegTrashAlt />
-          </button>{" "}
+          </button>
           <input
             type="text"
-            className=" w-full rounded-xl p-1 px-2"
+            className=" w-full rounded px-2 border"
             value={titleEdit}
             onChange={(e) => setTitleEdit(e.target.value)}
           />
-        </div>
+        </>
       ) : (
         <>
-          <input type="checkbox" className=" p-2" />
-          <label className="w-full text-medium text-gray-900">{task.title}</label>
+          {/* <input type="checkbox" className=" m-2 my-[9px]" /> */}
+          <div className="flex items-center justify-center w-[30px] h-[30px] mr-[13px] ">
+            <input
+              type="checkbox"
+              className=" mt-1 ml-1 p-0 m-0"
+              checked={task.isComplete}
+              onChange={(e: any) => updateTaskCompletion(e.target.checked)}
+            />
+          </div>
+          <label className="w-full text-medium text-gray-900 ">{task.title}</label>
         </>
       )}
     </div>

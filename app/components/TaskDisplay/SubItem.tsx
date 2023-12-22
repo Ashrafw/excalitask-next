@@ -6,6 +6,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 
 const SubItem = ({
   subTask,
+  mainTaskId,
   isEditMode,
   isFinishEdit,
   taskId,
@@ -15,6 +16,7 @@ const SubItem = ({
   isThisTheEditedTask,
 }: {
   subTask: SubTaskType;
+  mainTaskId: string;
   isEditMode: boolean;
   isFinishEdit: boolean;
   taskId: string;
@@ -50,27 +52,101 @@ const SubItem = ({
       }
     }, 500);
   }, [titleSubEdit]);
+  const handleDeleteSubTaskNew = (id: string) => {
+    const newTask = tasksMain.map((taskInner) => {
+      if (taskInner.id === editTaskId) {
+        // Update the tasklist for the specific object
+        const taskListInner = taskInner.taskList.filter((item) => item.id !== id);
+        return { ...taskInner, taskList: taskListInner };
+      } else {
+        return taskInner;
+      }
+    });
+    setTaskMain(newTask);
+  };
+
+  const handleDeleteSubTask = (id: string) => {
+    const theEditedTask = tasksMain.filter((taskInner) => taskInner.id === editTaskId)[0];
+    const newTaskMain = theEditedTask.taskList.map((task) => {
+      if (task.id === taskId) {
+        if (task.subTaskList.filter((innerSub) => innerSub.id !== id).length > 0) {
+          return {
+            ...task,
+            subTaskList: task.subTaskList.filter((innerSub) => innerSub.id !== id),
+          };
+        } else {
+          return {
+            ...task,
+            isSubtask: false,
+            subTaskList: task.subTaskList.filter((innerSub) => innerSub.id !== id),
+          };
+        }
+      } else {
+        return task;
+      }
+    });
+    const newTaskMainTwo = { ...theEditedTask, taskList: newTaskMain };
+    const newVal = tasksMain.map((task) => {
+      if (task.id === editTaskId) {
+        return newTaskMainTwo;
+      } else {
+        return task;
+      }
+    });
+    setTaskMain(newVal);
+  };
+
+  const updateTaskCompletion = (targetComplete: boolean) => {
+    const taskListInner = actualTask.subTaskList.map((item) => {
+      if (item.id === subTask.id) {
+        return { ...item, isComplete: targetComplete };
+      } else {
+        return item;
+      }
+    });
+    const newTask = tasksMain.map((taskInner) => {
+      if (taskInner.id === mainTaskId) {
+        const taskListNew = taskInner.taskList.map((item) => {
+          return { ...item, subTaskList: [...taskListInner] };
+        });
+        return { ...taskInner, taskList: taskListNew };
+      } else {
+        return taskInner;
+      }
+    });
+    setTaskMain(newTask);
+  };
+
   return (
-    <div className="flex gap-2 items-center justify-center pl-2 py-2 border-b border-t  border-opacity-5 rounded-lg  cursor-pointer hover:bg-slate-400 hover:bg-opacity-10 ">
+    <div className="flex gap-2 items-center h-[38px] justify-center px-2 py-1  border-b hover:bg-slate-400 hover:bg-opacity-10 ">
       {isFinishEdit && isThisTheEditedTask ? (
         <>
           <button
-            // onClick={deleteTask}
-            className="  bg-opacity-50 text-gray-400 text-sm rounded-md  "
+            onClick={() => handleDeleteSubTask(subTask.id)}
+            className=" flex items-center justify-center w-[30px] h-[30px] text-sm  text-gray-400 p-1 rounded bg-gray-200 hover:bg-gray-300 "
           >
             <FaRegTrashAlt />
-          </button>{" "}
+          </button>
           <input
             type="text"
-            className=" w-full rounded-xl p-1 px-2 mr-4"
+            className=" w-full rounded px-2 py-[2px] border  "
             value={titleSubEdit}
             onChange={(e) => setTitleSubEdit(e.target.value)}
           />
         </>
       ) : (
         <>
-          <input type="checkbox" className="" />
-          <label className="w-full text-medium  text-gray-00">{subTask.title}</label>
+          <div className="flex items-center justify-center w-[30px] h-[30px] mr-[10px] ">
+            <input
+              type="checkbox"
+              className=" mt-1 ml-1 p-0 m-0"
+              checked={subTask.isComplete}
+              onChange={(e: any) => updateTaskCompletion(e.target.checked)}
+            />
+          </div>
+          <label className="w-full text-medium text text-gray-00 py-[2px] ">
+            {subTask.title}
+          </label>
         </>
       )}
     </div>
