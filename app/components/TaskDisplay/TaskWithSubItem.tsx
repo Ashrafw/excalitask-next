@@ -94,14 +94,15 @@ const TaskWithSubItem = ({
     }
   }, [isFinishEdit, isThisTheEditedTask]);
   return (
-    <div className=" rounded border">
+    <div className=" rounded border -mt-[2px] bg-slate-50 ">
       <div
-        className={`flex gap-2 items-center py-[6px] h-[43px] px-2 justify-between border-b  hover:bg-slate-400 hover:bg-opacity-10  ${
+        className={`flex gap-2 items-center cursor-pointer py-[6px] h-[43px] px-2 justify-between border-b  hover:bg-slate-400 hover:bg-opacity-10  ${
           !isDropDown ? "bg-slate-200" : ""
         }`}
+        onClick={() => setIsDropDown((prev) => !prev)}
       >
         {isFinishEdit && isThisTheEditedTask ? (
-          <div className=" flex">
+          <div className=" flex ">
             <button
               onClick={() => handleDeleteTask(task.id)}
               className=" text-sm  text-gray-400 p-2  rounded bg-gray-200 hover:bg-gray-300 mr-2 "
@@ -116,7 +117,7 @@ const TaskWithSubItem = ({
             />
           </div>
         ) : (
-          <div className={`flex `}>
+          <div className={`flex `} onClick={() => setIsDropDown((prev) => !prev)}>
             {/* <input type="checkbox" className=" m-2 my-[9px]" /> */}
             <div className=" h-[2px] w-[66px]"></div>
             <label className="w-full text-medium text-gray-900 ml-[8px]">
@@ -128,14 +129,14 @@ const TaskWithSubItem = ({
           {isDropDown ? (
             <button
               disabled={isThisTheEditedTask && isFinishEdit}
-              onClick={() => setIsDropDown(false)}
+              // onClick={() => setIsDropDown(false)}
             >
               <IoIosArrowUp />
             </button>
           ) : (
             <button
-              // disabled={!(isThisTheEditedTask && isFinishEdit)}
-              onClick={() => setIsDropDown(true)}
+            // disabled={!(isThisTheEditedTask && isFinishEdit)}
+            // onClick={() => setIsDropDown(true)}
             >
               <IoIosArrowDown />
             </button>

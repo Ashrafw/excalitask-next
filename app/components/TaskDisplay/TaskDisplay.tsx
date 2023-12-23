@@ -83,7 +83,7 @@ const TaskDisplay = ({
           </div>
         ) : (
           <div className="  rounded-tl rounded-tr border-slate-800 px-2 py-2  bg-gray-700 text-gray-200 flex justify-between items-center gap-4">
-            <h1 className=" font-semibold  px-2 ">{task.title}</h1>
+            <h1 className=" font-semibold text-2xl px-2 ">{task.title}</h1>
             <button
               onMouseEnter={() => setIsShown(true)}
               onMouseLeave={() => setIsShown(false)}
@@ -161,7 +161,7 @@ const TaskDisplay = ({
             ) : (
               <div
                 onClick={() => setAddSingleTask(true)}
-                className=" flex gap-2 items-center px-4 py-2 hover:bg-slate-400 hover:bg-opacity-10 cursor-pointer text-lg"
+                className=" -mt-2 text-2xl flex gap-2 items-center px-4 py-2 hover:bg-slate-400 hover:bg-opacity-10 cursor-pointer item-center justify-center w-full"
               >
                 +
               </div>

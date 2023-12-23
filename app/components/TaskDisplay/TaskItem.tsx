@@ -118,8 +118,10 @@ const TaskItem = ({
             />
           </div>
           <label
-            className={`w-full text-medium cursor-pointer  text-gray-900  ${
-              task.isComplete ? "  decoration-slate-800 text-gray-900/25" : " "
+            className={`w-full text-2xl text-medium cursor-pointer  text-gray-900  ${
+              task.isComplete
+                ? "  line-through decoration-[2px] decoration-slate-800/25 text-gray-900/25"
+                : " "
             } `}
           >
             {task.title}
