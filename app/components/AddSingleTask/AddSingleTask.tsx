@@ -6,13 +6,16 @@ import { v4 as uuidv4 } from "uuid";
 import { taskType, usePersistStore } from "@/app/lib/zustand";
 import AddSingleSubTask from "./AddSingleSubTask";
 import { FaPlus } from "react-icons/fa6";
+import { FiPlus } from "react-icons/fi";
 
 const AddSingleTask = ({
   taskId,
   setAddSingleTask,
+  theme,
 }: {
   taskId: string;
   setAddSingleTask: React.Dispatch<React.SetStateAction<boolean>>;
+  theme: string;
 }) => {
   const [taskList, setTaskList] = useState<taskType[]>([]);
   const [taskTitle, setTaskTitle] = useState("");
@@ -49,9 +52,9 @@ const AddSingleTask = ({
     }
     setAddSingleTask(false);
   };
-
+  console.log("theme", theme);
   return (
-    <div className="  p-2 border-2 bg-slate-600 rounded-lg flex flex-col gap-2">
+    <div className={` ${theme} p-2 border-2  rounded-lg flex flex-col gap-2`}>
       <div className="flex flex-col gap-2 bg-white p-2 rounded">
         {taskList.length > 0 && (
           <div className="flex flex-col gap-2">
@@ -62,6 +65,7 @@ const AddSingleTask = ({
                 subTaskList={item.subTaskList}
                 index={index + 1}
                 setTaskList={setTaskList}
+                theme={theme}
               />
             ))}
           </div>
@@ -80,8 +84,10 @@ const AddSingleTask = ({
             value={taskTitle}
             onChange={(e) => setTaskTitle(e.target.value)}
           />
-          <button className=" bg-gray-700 w-[40px] text-gray-100 text-lg p-1 rounded h-[40px]  ">
-            +
+          <button
+            className={` ${theme} w-[40px] text-gray-100 text-lg flex justify-center items-center rounded h-[40px]  `}
+          >
+            <FiPlus />
           </button>
         </form>
       </div>

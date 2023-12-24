@@ -5,6 +5,7 @@ import { FaChevronUp } from "react-icons/fa6";
 import { FaChevronDown } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { SubTaskType, taskType } from "@/app/lib/zustand";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 type AddTaskItemType = {
   actualTask: taskType;
@@ -12,12 +13,17 @@ type AddTaskItemType = {
   //   focusedMain: boolean;
   index: number;
   setTaskList: React.Dispatch<React.SetStateAction<taskType[]>>;
+
+  theme: string;
+  fontStyle: string;
 };
 const AddTaskItem = ({
   actualTask,
   subTaskList,
   index,
   setTaskList,
+  theme,
+  fontStyle,
 }: AddTaskItemType) => {
   const [subTaskTitle, setSubTaskTitle] = useState("");
   const [dropDown, setDropDown] = useState(false);
@@ -25,6 +31,8 @@ const AddTaskItem = ({
   const [focused, setFocused] = useState(false);
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
+  const [animationParent1] = useAutoAnimate();
+  const [animationParent2] = useAutoAnimate();
 
   const handleSubmitSubTask = (e: any) => {
     e.preventDefault();
@@ -109,10 +117,10 @@ const AddTaskItem = ({
           </button>
         )}
       </div>
-      <div>
+      <div ref={animationParent2}>
         {dropDown && (
           <>
-            <div className=" pl-8 mt-2 flex flex-col gap-1 ">
+            <div className=" pl-8 mt-2 flex flex-col gap-1 " ref={animationParent1}>
               {actualTask.subTaskList?.map((item, index) => (
                 <div
                   key={item.id}
@@ -138,14 +146,16 @@ const AddTaskItem = ({
                       required
                       type="text"
                       placeholder="Enter subtask"
-                      className=" border-2  py-1 px-4 w-full my-2 text-sm rounded"
+                      className=" border-2 py-1 px-4 w-full my-2 text-sm rounded"
                       value={subTaskTitle}
                       onFocus={onFocus}
                       onBlur={onBlur}
                       autoFocus={focused}
                       onChange={(e) => setSubTaskTitle(e.target.value)}
                     />
-                    <button className=" bg-gray-700 w-[40px] text-gray-100 text-sm p-1 rounded h-[30px]  ">
+                    <button
+                      className={` ${theme} w-[40px] text-gray-100 text-sm p-1 rounded h-[30px]  `}
+                    >
                       +
                     </button>
                   </div>

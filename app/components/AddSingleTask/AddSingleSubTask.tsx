@@ -11,12 +11,14 @@ type AddTaskItemType = {
   subTaskList: SubTaskType[];
   index: number;
   setTaskList: React.Dispatch<React.SetStateAction<taskType[]>>;
+  theme: string;
 };
 const AddSingleSubTask = ({
   actualTask,
   subTaskList,
   index,
   setTaskList,
+  theme,
 }: AddTaskItemType) => {
   const [subTaskTitle, setSubTaskTitle] = useState("");
   const [dropDown, setDropDown] = useState(false);
@@ -145,7 +147,9 @@ const AddSingleSubTask = ({
                     autoFocus={focused}
                     onChange={(e) => setSubTaskTitle(e.target.value)}
                   />
-                  <button className=" bg-gray-700 w-[40px] text-gray-100 text-sm p-1 rounded h-[30px]  ">
+                  <button
+                    className={` ${theme} w-[40px] text-gray-100 text-sm p-1 rounded h-[30px]  `}
+                  >
                     +
                   </button>
                 </div>

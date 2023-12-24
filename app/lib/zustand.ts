@@ -20,6 +20,8 @@ export type MainTaskType = {
   isComplete: boolean;
   taskList: taskType[];
   isSubtask: boolean;
+  theme: string;
+  fontStyle: string;
 };
 interface StateStore {
   isDarkMode: boolean;

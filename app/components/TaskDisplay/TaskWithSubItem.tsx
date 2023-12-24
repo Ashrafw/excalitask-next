@@ -17,6 +17,7 @@ const TaskWithSubItem = ({
   setIsFinishEdit,
   isThisTheEditedTask,
   isLastItem,
+  theme,
 }: {
   task: taskType;
   mainTaskId: string;
@@ -27,6 +28,7 @@ const TaskWithSubItem = ({
   setIsFinishEdit: React.Dispatch<React.SetStateAction<boolean>>;
   isThisTheEditedTask: boolean;
   isLastItem: boolean;
+  theme: string;
 }) => {
   const [titleEdit, setTitleEdit] = useState(task.title);
   const { tasksMain, setTaskMain } = usePersistStore();
@@ -93,10 +95,11 @@ const TaskWithSubItem = ({
       setIsDropDown(true);
     }
   }, [isFinishEdit, isThisTheEditedTask]);
+  console.log("theme ====>", theme);
   return (
-    <div className=" rounded border -mt-[2px] bg-slate-50 ">
+    <div className=" rounded border -mt-[2px] bg-slate-50  ">
       <div
-        className={`flex gap-2 items-center cursor-pointer py-[6px] h-[43px] px-2 justify-between border-b  hover:bg-slate-400 hover:bg-opacity-10  ${
+        className={`flex gap-2 ${theme} bg-opacity-5 items-center cursor-pointer py-[6px] h-[43px] px-2 justify-between border-b  hover:bg-slate-400 hover:bg-opacity-10  ${
           !isDropDown ? "bg-slate-200" : ""
         }`}
         onClick={() => setIsDropDown((prev) => !prev)}

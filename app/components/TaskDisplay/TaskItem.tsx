@@ -84,7 +84,7 @@ const TaskItem = ({
 
   return (
     <div
-      className={`flex gap-2 items-center py-[6px] px-2  cursor-pointer border-opacity-5 h-[43px] hover:bg-slate-400 hover:bg-opacity-10 border-b`}
+      className={`flex gap-2 items-center py-[4px] px-2  cursor-pointer border-opacity-5  hover:bg-slate-400 hover:bg-opacity-10 border-b`}
       onClick={() =>
         !(isFinishEdit && isThisTheEditedTask)
           ? updateTaskCompletion(!task.isComplete)
@@ -118,7 +118,7 @@ const TaskItem = ({
             />
           </div>
           <label
-            className={`w-full text-2xl text-medium cursor-pointer  text-gray-900  ${
+            className={`w-full text-lg text-medium cursor-pointer  text-gray-900  ${
               task.isComplete
                 ? "  line-through decoration-[2px] decoration-slate-800/25 text-gray-900/25"
                 : " "

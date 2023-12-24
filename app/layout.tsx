@@ -14,10 +14,18 @@ import {
   Poppins,
 } from "next/font/google";
 import "./globals.css";
+import {
+  architects,
+  swanky,
+  shadows,
+  poppinsFont,
+  rokkittFont,
+  glutenFont,
+} from "./fonts/fonts";
 
 // const inter = Swanky_and_Moo_Moo({ subsets: ["latin"], weight: ["400"] });
 // const inter = Shadows_Into_Light_Two({ subsets: ["latin"], weight: ["400"] });
-const inter = Architects_Daughter({ subsets: ["latin"], weight: ["400"] });
+const inter = Poppins({ subsets: ["latin"], weight: ["400"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,7 +35,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={`${architects.variable} ${swanky.variable} ${shadows.variable}  ${rokkittFont.variable} ${glutenFont.variable} ${poppinsFont.variable} font-poppins`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

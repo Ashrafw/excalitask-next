@@ -65,7 +65,9 @@ const TaskDisplay = ({
 
   if (task) {
     return (
-      <div className=" relative shadow-xl rounded  bg-gray-50  min-w-[340px] ">
+      <div
+        className={` relative shadow-xl rounded  bg-gray-50  min-w-[340px] ${task.fontStyle}`}
+      >
         {isFinishEdit && isThisTheEditedTask ? (
           <div className="  rounded-tl rounded-tr border-slate-800 px-2 py-2  bg-gray-700 text-gray-800 flex justify-between items-center gap-4">
             <input
@@ -82,8 +84,10 @@ const TaskDisplay = ({
             </button>
           </div>
         ) : (
-          <div className="  rounded-tl rounded-tr border-slate-800 px-2 py-2  bg-gray-700 text-gray-200 flex justify-between items-center gap-4">
-            <h1 className=" font-semibold text-2xl px-2 ">{task.title}</h1>
+          <div
+            className={`  rounded-tl rounded-tr border-slate-800 px-2 py-2  ${task.theme} text-gray-200 flex justify-between items-center gap-4`}
+          >
+            <h1 className=" font-semibold text-lg px-2 ">{task.title}</h1>
             <button
               onMouseEnter={() => setIsShown(true)}
               onMouseLeave={() => setIsShown(false)}
@@ -98,7 +102,10 @@ const TaskDisplay = ({
           </div>
         )}
 
-        <div className="flex flex-col text-[18px]  p-2 py-2" ref={animationParent}>
+        <div
+          className="flex flex-col text-[16px] gap-[4px] p-2 py-2"
+          ref={animationParent}
+        >
           {task.taskList?.map((item, i) => {
             return item?.isSubtask ? (
               <TaskWithSubItem
@@ -112,6 +119,7 @@ const TaskDisplay = ({
                 setIsFinishEdit={setIsFinishEdit}
                 isThisTheEditedTask={isThisTheEditedTask}
                 isLastItem={task.taskList.length === i + 1}
+                theme={task.theme}
               />
             ) : (
               <TaskItem
@@ -157,7 +165,11 @@ const TaskDisplay = ({
         ) : (
           <>
             {addSingleTask ? (
-              <AddSingleTask taskId={task.id} setAddSingleTask={setAddSingleTask} />
+              <AddSingleTask
+                taskId={task.id}
+                setAddSingleTask={setAddSingleTask}
+                theme={task.theme}
+              />
             ) : (
               <div
                 onClick={() => setAddSingleTask(true)}
