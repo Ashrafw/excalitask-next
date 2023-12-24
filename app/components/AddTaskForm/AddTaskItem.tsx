@@ -173,7 +173,7 @@ const AddTaskItem = ({
                     <input
                       required
                       type="text"
-                      placeholder="Enter subtask"
+                      placeholder="Add a subtask"
                       className=" border-2 py-1 px-4 w-full my-2 text-base rounded"
                       value={subTaskTitle}
                       onFocus={onFocus}
@@ -182,9 +182,9 @@ const AddTaskItem = ({
                       onChange={(e) => setSubTaskTitle(e.target.value)}
                     />
                     <button
-                      className={` ${theme} w-[40px] text-gray-100 text-sm p-1 rounded h-[30px]  `}
+                      className={` ${theme} w-[40px] text-gray-100 text-base p-1 rounded h-[30px]  `}
                     >
-                      +
+                      <FaPlus />
                     </button>
                   </div>
                 </form>

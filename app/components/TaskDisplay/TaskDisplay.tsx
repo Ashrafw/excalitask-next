@@ -7,6 +7,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { IoMdReturnLeft } from "react-icons/io";
 import AddSingleTask from "../AddSingleTask/AddSingleTask";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { FaPlus } from "react-icons/fa6";
 
 type TaskDisplayType = {
   task: MainTaskType;
@@ -27,6 +28,7 @@ const TaskDisplay = ({
   const [addSingleTask, setAddSingleTask] = useState(false);
   const [dataAll, setDataAll] = useState<MainTaskType[]>(tasksMain);
   const [isFinishEdit, setIsFinishEdit] = useState(false);
+  const [isSaveAllClick, setIsSaveAllClick] = useState(false);
   const [categoryEdit, setCategoryEdit] = useState(task.title);
   const handleCategoryChange = () => {
     const newTask = tasksMain.map((taskInner) => {
@@ -55,6 +57,7 @@ const TaskDisplay = ({
   }, [categoryEdit]);
   const handleFinishEdit = () => {
     if (categoryEdit !== task.title) handleCategoryChange();
+    setIsSaveAllClick(true);
     setIsFinishEdit(false);
   };
 
@@ -139,20 +142,23 @@ const TaskDisplay = ({
                 isLastItem={task.taskList.length === i + 1}
                 index={i}
                 prefix={task.prefix}
+                theme={task.theme}
               />
             );
           })}
         </div>
 
         {isFinishEdit && isThisTheEditedTask ? (
-          <>
-            <div className=" flex items-center px-4 py-2 rounded-b gap-4 w-full justify-center bg-gray-200 text-gray-50 cursor-pointer text-lg">
-              <button
-                onClick={handleFinishEdit}
-                className="bg-slate-500 min-w-[120px] shadow text-gray-50 py-1 px-4 text-[14px] rounded-lg "
-              >
-                Save changes
-              </button>
+          <div
+            className={` ${task.theme} bg-opacity-70 p-2  rounded-lg flex flex-col gap-2`}
+          >
+            <AddSingleTask
+              taskId={task.id}
+              setAddSingleTask={setAddSingleTask}
+              theme={task.theme}
+              task={task}
+            />
+            <div className=" grid grid-cols-2 items-center px-4 py-2 rounded gap-4 w-full justify-center bg-gray-50 text-gray-50 cursor-pointer text-lg">
               <button
                 onMouseEnter={() => setIsShown(true)}
                 onMouseLeave={() => setIsShown(false)}
@@ -160,14 +166,20 @@ const TaskDisplay = ({
                   handleDeleteAll(task.id);
                   setIsFinishEdit(true);
                 }}
-                className=" bg-slate-500 min-w-[120px] shadow text-gray-50 py-1 px-4 text-[14px] rounded-lg flex items-center justify-center gap-2 "
+                className={` bg-gray-300 min-w-[120px] shadow text-gray-900 py-1 px-4  text-base rounded flex items-center justify-center gap-2 hover:bg-opacity-70 `}
               >
                 <FaRegTrashAlt />
                 <p>Delete all</p>
               </button>
+              <button
+                onClick={handleFinishEdit}
+                className={` ${task.theme} min-w-[120px] shadow text-gray-50 py-1 px-4  text-base rounded flex items-center justify-center gap-2  hover:bg-opacity-50 `}
+              >
+                Save changes
+              </button>
             </div>
             {/* <AddSingleTask taskId={task.id} setAddSingleTask={setAddSingleTask} /> */}
-          </>
+          </div>
         ) : (
           <>
             {addSingleTask ? (
@@ -175,13 +187,20 @@ const TaskDisplay = ({
                 taskId={task.id}
                 setAddSingleTask={setAddSingleTask}
                 theme={task.theme}
+                task={task}
               />
             ) : (
               <div
-                onClick={() => setAddSingleTask(true)}
-                className=" -mt-2 text-2xl flex gap-2 items-center px-4 py-2 hover:bg-slate-400 hover:bg-opacity-10 cursor-pointer item-center justify-center w-full"
+                onClick={() => {
+                  setEditTaskId(task.id);
+                  setIsFinishEdit(true);
+                  // setAddSingleTask(true)}
+                }}
+                className=" -mt-1 text-base flex gap-2 items-center text-gray-600 px-4 py-4 hover:bg-slate-400 hover:bg-opacity-10 cursor-pointer item-center justify-center w-full"
               >
-                +
+                <FaPlus />
+
+                {/* + */}
               </div>
             )}
           </>

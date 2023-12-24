@@ -142,7 +142,7 @@ const AddTaskForm = ({ setOpenAddTask }: AddModalTypes) => {
                 //   onBlur={onBlur}
                 required
                 type="text"
-                placeholder="Enter task"
+                placeholder="Add a task"
                 className="border rounded p-2 px-4 w-full text-lg"
                 autoFocus
                 value={taskTitle}

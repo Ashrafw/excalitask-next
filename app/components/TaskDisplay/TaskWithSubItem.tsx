@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import SubItem from "./SubItem";
 import { IoIosArrowUp } from "react-icons/io";
+import { v4 as uuidv4 } from "uuid";
 
 import { FaRegTrashAlt } from "react-icons/fa";
 import { taskType, usePersistStore } from "@/app/lib/zustand";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { letters } from "@/app/helper/helper";
+import { FaPlus } from "react-icons/fa6";
 const TaskWithSubItem = ({
   task,
   mainTaskId,
@@ -38,6 +40,8 @@ const TaskWithSubItem = ({
   const [titleEdit, setTitleEdit] = useState(task.title);
   const { tasksMain, setTaskMain } = usePersistStore();
   const [isDropDown, setIsDropDown] = useState(true);
+  const [subTaskTitle, setSubTaskTitle] = useState("");
+
   const [animationChild] = useAutoAnimate();
 
   useEffect(() => {
@@ -107,6 +111,44 @@ const TaskWithSubItem = ({
       return "";
     }
   };
+  const handleSubmitSubTask = (e: any) => {
+    e.preventDefault();
+    const newSubtaskList = [
+      ...task.subTaskList,
+      {
+        id: uuidv4(),
+        title: subTaskTitle,
+        isComplete: false,
+        isSubtask: true,
+      },
+    ];
+    console.log("===============================================");
+
+    console.log("newSubtaskList", newSubtaskList);
+
+    const newTaskItem = { ...task, subTaskList: newSubtaskList };
+    console.log("newTaskItem", newTaskItem);
+
+    const newTask = tasksMain.map((item) => {
+      if (item.id === mainTaskId) {
+        const newIsh = item.taskList.map((inTask) => {
+          if (inTask.id === task.id) {
+            return newTaskItem;
+          } else {
+            return inTask;
+          }
+        });
+
+        return { ...item, taskList: newIsh };
+      } else {
+        return item;
+      }
+    });
+    console.log("newTask====>", newTask);
+    setTaskMain(newTask);
+    setSubTaskTitle("");
+  };
+  console.log("task", task);
   return (
     <div className=" rounded border -mt-[2px] bg-slate-50 w-full ">
       <button
@@ -188,6 +230,28 @@ const TaskWithSubItem = ({
               />
             ))
           : null}
+        {isFinishEdit && isThisTheEditedTask ? (
+          <form onSubmit={handleSubmitSubTask}>
+            <div className=" flex items-center gap-1 mb-2 p-1">
+              <input
+                required
+                type="text"
+                placeholder="Add a subtask"
+                className=" border-2 py-1 px-4 w-full text-base rounded"
+                value={subTaskTitle}
+                // onFocus={onFocus}
+                // onBlur={onBlur}
+                // autoFocus={focused}
+                onChange={(e) => setSubTaskTitle(e.target.value)}
+              />
+              <button
+                className={`w-[40px] ${theme} text-gray-100 flex justify-center items-center text-sm p-1 rounded h-[32px]  `}
+              >
+                <FaPlus />
+              </button>
+            </div>
+          </form>
+        ) : null}
       </div>
     </div>
   );

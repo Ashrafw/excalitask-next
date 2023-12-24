@@ -6,6 +6,7 @@ import { FaChevronUp } from "react-icons/fa6";
 import { FaChevronDown } from "react-icons/fa6";
 import { v4 as uuidv4 } from "uuid";
 import { capitalizeFirstLetter } from "@/app/helper/helper";
+import { FiPlus } from "react-icons/fi";
 type AddTaskItemType = {
   actualTask: taskType;
   subTaskList: SubTaskType[];
@@ -139,7 +140,7 @@ const AddSingleSubTask = ({
                   <input
                     required
                     type="text"
-                    placeholder="Enter subtask"
+                    placeholder="Add a subtask"
                     className=" border-2  py-1 px-4 w-full my-2 text-sm rounded"
                     value={subTaskTitle}
                     onFocus={onFocus}
@@ -148,9 +149,9 @@ const AddSingleSubTask = ({
                     onChange={(e) => setSubTaskTitle(e.target.value)}
                   />
                   <button
-                    className={` ${theme} w-[40px] text-gray-100 text-sm p-1 rounded h-[30px]  `}
+                    className={` ${theme} w-[40px] text-gray-100 flex justify-center items-center text-lg p-1 rounded h-[30px]  `}
                   >
-                    +
+                    <FiPlus />
                   </button>
                 </div>
               </form>
