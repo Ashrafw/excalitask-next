@@ -106,16 +106,22 @@ const SubItem = ({
         return item;
       }
     });
+    console.log("taskListInner", taskListInner);
     const newTask = tasksMain.map((taskInner) => {
       if (taskInner.id === mainTaskId) {
         const taskListNew = taskInner.taskList.map((item) => {
-          return { ...item, subTaskList: [...taskListInner] };
+          if (item.id === taskId) {
+            return { ...item, subTaskList: [...taskListInner] };
+          } else {
+            return item;
+          }
         });
         return { ...taskInner, taskList: taskListNew };
       } else {
         return taskInner;
       }
     });
+    console.log("newTask", newTask);
     setTaskMain(newTask);
   };
   const handleSubmitSubTask = (e: any) => {
@@ -155,7 +161,7 @@ const SubItem = ({
                 type="checkbox"
                 className=" h-[14px] w-[14px] mt-1 ml-1 p-0 m-0 accent-slate-600"
                 checked={subTask.isComplete}
-                // onChange={(e: any) => updateTaskCompletion(e.target.checked)}
+                onChange={(e: any) => updateTaskCompletion(e.target.checked)}
               />
             </div>
             <label

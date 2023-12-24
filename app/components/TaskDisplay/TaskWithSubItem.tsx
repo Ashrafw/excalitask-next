@@ -122,12 +122,8 @@ const TaskWithSubItem = ({
         isSubtask: true,
       },
     ];
-    console.log("===============================================");
-
-    console.log("newSubtaskList", newSubtaskList);
 
     const newTaskItem = { ...task, subTaskList: newSubtaskList };
-    console.log("newTaskItem", newTaskItem);
 
     const newTask = tasksMain.map((item) => {
       if (item.id === mainTaskId) {
@@ -144,11 +140,9 @@ const TaskWithSubItem = ({
         return item;
       }
     });
-    console.log("newTask====>", newTask);
     setTaskMain(newTask);
     setSubTaskTitle("");
   };
-  console.log("task", task);
   return (
     <div className=" rounded border -mt-[2px] bg-slate-50 w-full ">
       <button

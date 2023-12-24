@@ -136,10 +136,10 @@ const AddTaskItem = ({
           </button>
         )}
       </div>
-      <div ref={animationParent2}>
+      <div>
         {dropDown && (
           <>
-            <div className=" pl-8 mt-2 flex flex-col gap-1 " ref={animationParent1}>
+            <div className=" pl-8 mt-2 flex flex-col gap-1 ">
               {actualTask.subTaskList?.map((item, index) => (
                 <div
                   key={item.id}

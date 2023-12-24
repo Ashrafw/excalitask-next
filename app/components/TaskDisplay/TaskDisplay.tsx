@@ -109,7 +109,7 @@ const TaskDisplay = ({
 
         <div
           className="flex flex-col text-[16px] gap-[4px] p-2 py-2"
-          ref={animationParent}
+          // ref={animationParent}
         >
           {task.taskList?.map((item, i) => {
             return item?.isSubtask ? (

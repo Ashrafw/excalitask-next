@@ -81,25 +81,6 @@ const TaskItem = ({
     });
     setTaskMain(newTask);
   };
-  const updateTaskCompletion = (targetComplete: boolean) => {
-    const newTask = tasksMain.map((taskInner) => {
-      if (taskInner.id === mainTaskId) {
-        // Update the tasklist for the specific object
-        const taskListInner = taskInner.taskList.map((item) => {
-          if (item.id === task.id) {
-            return { ...item, isComplete: targetComplete };
-          } else {
-            return item;
-          }
-        });
-        return { ...taskInner, taskList: taskListInner };
-      } else {
-        return taskInner;
-      }
-    });
-
-    setTaskMain(newTask);
-  };
 
   const checkPrefix = (pref: string, index: number) => {
     if (letters[index]) {
@@ -111,7 +92,6 @@ const TaskItem = ({
 
   const handleSubmitSubTask = (e: any) => {
     e.preventDefault();
-    console.log("taskList before", taskList);
     setSubTaskList((prev: SubTaskType[]): any => {
       return [
         ...prev,
@@ -152,7 +132,6 @@ const TaskItem = ({
     });
 
     setTaskMain(newTask);
-    console.log("taskList after", taskList);
     setSubTaskTitle("");
   };
   const handleFinal = () => {
@@ -193,8 +172,30 @@ const TaskItem = ({
   //   }
   // }, [isSaveAllClick]);
 
-  console.log("task.id ", task.id);
-  console.log("taskList ", taskList);
+  const handleChecked = (e: any) => {
+    e.preventDefault();
+    // console.log("e.target", e.target);/
+  };
+
+  const updateTaskCompletion = (targetComplete: boolean) => {
+    const newTask = tasksMain.map((taskInner) => {
+      if (taskInner.id === mainTaskId) {
+        // Update the tasklist for the specific object
+        const taskListInner = taskInner.taskList.map((item) => {
+          if (item.id === task.id) {
+            return { ...item, isComplete: targetComplete };
+          } else {
+            return item;
+          }
+        });
+        return { ...taskInner, taskList: taskListInner };
+      } else {
+        return taskInner;
+      }
+    });
+
+    setTaskMain(newTask);
+  };
 
   return (
     <div
@@ -274,14 +275,14 @@ const TaskItem = ({
           </div>
         </div>
       ) : (
-        <div className="flex gap-2 items-center">
+        <form onSubmit={handleChecked} className="flex gap-2 items-center">
           {/* <input type="checkbox" className=" m-2 my-[9px]" /> */}
           <div className="flex items-center  cursor-pointer justify-center w-[30px] h-[30px] mr-[13px] ">
             <input
               type="checkbox"
               className={` h-4 w-4 mt-1 ml-1 p-0 m-0 accent-slate-600`}
               checked={task.isComplete}
-              // onChange={(e: any) => updateTaskCompletion(e.target.checked)}
+              onChange={(e: any) => updateTaskCompletion(e.target.checked)}
             />
           </div>
           <label
@@ -300,7 +301,7 @@ const TaskItem = ({
             }`}
             {task.title}
           </label>
-        </div>
+        </form>
       )}
     </div>
   );
