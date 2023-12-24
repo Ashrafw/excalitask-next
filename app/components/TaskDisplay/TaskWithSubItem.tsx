@@ -7,6 +7,7 @@ import { IoIosArrowUp } from "react-icons/io";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { taskType, usePersistStore } from "@/app/lib/zustand";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { letters } from "@/app/helper/helper";
 const TaskWithSubItem = ({
   task,
   mainTaskId,
@@ -18,6 +19,8 @@ const TaskWithSubItem = ({
   isThisTheEditedTask,
   isLastItem,
   theme,
+  index,
+  prefix,
 }: {
   task: taskType;
   mainTaskId: string;
@@ -29,6 +32,8 @@ const TaskWithSubItem = ({
   isThisTheEditedTask: boolean;
   isLastItem: boolean;
   theme: string;
+  index: number;
+  prefix: string;
 }) => {
   const [titleEdit, setTitleEdit] = useState(task.title);
   const { tasksMain, setTaskMain } = usePersistStore();
@@ -95,40 +100,59 @@ const TaskWithSubItem = ({
       setIsDropDown(true);
     }
   }, [isFinishEdit, isThisTheEditedTask]);
-  console.log("theme ====>", theme);
+  const checkPrefix = (pref: string, index: number) => {
+    if (letters[index]) {
+      return `${letters[index]}. `;
+    } else {
+      return "";
+    }
+  };
   return (
-    <div className=" rounded border -mt-[2px] bg-slate-50  ">
-      <div
-        className={`flex gap-2 ${theme} bg-opacity-5 items-center cursor-pointer py-[6px] h-[43px] px-2 justify-between border-b  hover:bg-slate-400 hover:bg-opacity-10  ${
-          !isDropDown ? "bg-slate-200" : ""
+    <div className=" rounded border -mt-[2px] bg-slate-50 w-full ">
+      <button
+        className={`flex gap-2 ${theme} items- py-[6px] h-[43px] px-2 justify-between border-b w-full  hover:bg-opacity-10  ${
+          !isDropDown ? "bg-opacity-25" : " bg-opacity-25"
         }`}
+        disabled={isFinishEdit && isThisTheEditedTask}
         onClick={() => setIsDropDown((prev) => !prev)}
       >
         {isFinishEdit && isThisTheEditedTask ? (
-          <div className=" flex ">
+          <div className=" flex w-full">
             <button
               onClick={() => handleDeleteTask(task.id)}
-              className=" text-sm  text-gray-400 p-2  rounded bg-gray-200 hover:bg-gray-300 mr-2 "
+              className=" text-sm  text-gray-400 p-2  rounded bg-white/50 hover:bg-white mr-2 "
             >
               <FaRegTrashAlt />
             </button>
             <input
               type="text"
-              className=" w-full rounded border px-2 "
+              className=" w-full rounded border px-2 text-lg  cursor-pointer"
               value={titleEdit}
               onChange={(e) => setTitleEdit(e.target.value)}
             />
           </div>
         ) : (
-          <div className={`flex `} onClick={() => setIsDropDown((prev) => !prev)}>
+          <div className={`flex w-full  cursor-pointer text-start`}>
             {/* <input type="checkbox" className=" m-2 my-[9px]" /> */}
-            <div className=" h-[2px] w-[66px]"></div>
-            <label className="w-full text-medium text-gray-900 ml-[8px]">
+            <div className=" h-[2px] w-[56px] cursor-pointer"></div>
+            <label className="w-full text-lg text-gray-900  cursor-pointer">
+              {`${
+                prefix === "numbers"
+                  ? `${index + 1}. `
+                  : prefix === "letters"
+                  ? checkPrefix(prefix, index)
+                  : ""
+              }`}
+
               {task.title}
             </label>
           </div>
         )}
-        <div className=" flex justify-center items-center cursor-pointer p-2 rounded ">
+        <div
+          className={` flex justify-center items-center cursor-pointer p-2 rounded ${
+            isFinishEdit && isThisTheEditedTask ? " opacity-5 " : ""
+          }`}
+        >
           {isDropDown ? (
             <button
               disabled={isThisTheEditedTask && isFinishEdit}
@@ -145,8 +169,8 @@ const TaskWithSubItem = ({
             </button>
           )}
         </div>
-      </div>
-      <div className="flex flex-col ml-8 p-0  border-l text-[16px] " ref={animationChild}>
+      </button>
+      <div className="flex flex-col ml-8 p-0  border-l text-base " ref={animationChild}>
         {isDropDown
           ? task.subTaskList?.map((item, i) => (
               <SubItem

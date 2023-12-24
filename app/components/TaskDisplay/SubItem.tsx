@@ -140,7 +140,7 @@ const SubItem = ({
           </button>
           <input
             type="text"
-            className=" w-full rounded px-2 py-[2px] border  "
+            className=" w-full rounded px-2 py-[2px] border text-base  "
             value={titleSubEdit}
             onChange={(e) => setTitleSubEdit(e.target.value)}
           />
@@ -156,7 +156,7 @@ const SubItem = ({
             />
           </div>
           <label
-            className={`w-full cursor-pointer text-medium text text-gray-00 py-[2px]  ${
+            className={`w-full cursor-pointer text-medium text text-gray-00 py-[2px] text-base  ${
               subTask.isComplete ? " decoration-slate-800 text-gray-900/25" : " "
             } `}
           >

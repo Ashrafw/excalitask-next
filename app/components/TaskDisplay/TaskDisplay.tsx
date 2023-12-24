@@ -69,10 +69,12 @@ const TaskDisplay = ({
         className={` relative shadow-xl rounded  bg-gray-50  min-w-[340px] ${task.fontStyle}`}
       >
         {isFinishEdit && isThisTheEditedTask ? (
-          <div className="  rounded-tl rounded-tr border-slate-800 px-2 py-2  bg-gray-700 text-gray-800 flex justify-between items-center gap-4">
+          <div
+            className={`rounded-tl rounded-tr border-slate-800 p-2 ${task.theme} text-gray-800 flex justify-between items-center gap-4`}
+          >
             <input
               type="text"
-              className=" w-full rounded p-1 px-2"
+              className=" w-full rounded p-1 px-2 font-semibold text-lg"
               value={categoryEdit}
               onChange={(e) => setCategoryEdit(e.target.value)}
             />
@@ -85,9 +87,9 @@ const TaskDisplay = ({
           </div>
         ) : (
           <div
-            className={`  rounded-tl rounded-tr border-slate-800 px-2 py-2  ${task.theme} text-gray-200 flex justify-between items-center gap-4`}
+            className={`rounded-tl rounded-tr border-slate-800 p-2 ${task.theme} text-gray-200 flex justify-between items-center gap-4`}
           >
-            <h1 className=" font-semibold text-lg px-2 ">{task.title}</h1>
+            <h1 className="w-full  font-semibold text-lg  p-1 px-2 ">{task.title}</h1>
             <button
               onMouseEnter={() => setIsShown(true)}
               onMouseLeave={() => setIsShown(false)}
@@ -95,7 +97,7 @@ const TaskDisplay = ({
                 setEditTaskId(task.id);
                 setIsFinishEdit(true);
               }}
-              className=" bg-gray-800 text-2xl rounded p-1 "
+              className=" bg-white bg-opacity-10 text-2xl rounded p-1 "
             >
               <MdOutlineMoreVert />
             </button>
@@ -120,6 +122,8 @@ const TaskDisplay = ({
                 isThisTheEditedTask={isThisTheEditedTask}
                 isLastItem={task.taskList.length === i + 1}
                 theme={task.theme}
+                index={i}
+                prefix={task.prefix}
               />
             ) : (
               <TaskItem
@@ -133,6 +137,8 @@ const TaskDisplay = ({
                 setIsFinishEdit={setIsFinishEdit}
                 isThisTheEditedTask={isThisTheEditedTask}
                 isLastItem={task.taskList.length === i + 1}
+                index={i}
+                prefix={task.prefix}
               />
             );
           })}

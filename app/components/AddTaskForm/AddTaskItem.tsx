@@ -6,6 +6,7 @@ import { FaChevronDown } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { SubTaskType, taskType } from "@/app/lib/zustand";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { letters } from "@/app/helper/helper";
 
 type AddTaskItemType = {
   actualTask: taskType;
@@ -16,6 +17,7 @@ type AddTaskItemType = {
 
   theme: string;
   fontStyle: string;
+  prefix: string;
 };
 const AddTaskItem = ({
   actualTask,
@@ -24,6 +26,7 @@ const AddTaskItem = ({
   setTaskList,
   theme,
   fontStyle,
+  prefix,
 }: AddTaskItemType) => {
   const [subTaskTitle, setSubTaskTitle] = useState("");
   const [dropDown, setDropDown] = useState(false);
@@ -80,6 +83,13 @@ const AddTaskItem = ({
     });
   };
 
+  const checkPrefix = (pref: string, index: number) => {
+    if (letters[index]) {
+      return `${letters[index]}. `;
+    } else {
+      return "";
+    }
+  };
   return (
     <div className="border rounded py-1 bg-gray-100 px-4 w-full flex flex-col ">
       <div className="flex justify-between items-center ">
@@ -90,7 +100,16 @@ const AddTaskItem = ({
           >
             <FaRegTrashAlt />
           </button>{" "}
-          <h1 className="ml-2 w-[70%]">{actualTask.title}</h1>
+          <h1 className="ml-2 text-lg w-full">
+            {`${
+              prefix === "none"
+                ? ""
+                : prefix === "numbers"
+                ? `${index}. `
+                : checkPrefix(prefix, index)
+            }`}
+            {actualTask.title}
+          </h1>
         </div>
 
         {actualTask.subTaskList?.length > 0 ? (
@@ -133,7 +152,16 @@ const AddTaskItem = ({
                     >
                       <FaRegTrashAlt />
                     </button>{" "}
-                    <h1 className=" w-[70%] text-sm flex gap-1">{item?.title}</h1>
+                    <h1 className=" w-full text-base flex gap-1">
+                      {/* {`${
+                        prefix === "numbers"
+                          ? `${index + 1}. `
+                          : prefix === "letters"
+                          ? checkPrefix(prefix, index)
+                          : ""
+                      }`}{" "} */}
+                      {item?.title}
+                    </h1>
                   </div>
                 </div>
               ))}
@@ -146,7 +174,7 @@ const AddTaskItem = ({
                       required
                       type="text"
                       placeholder="Enter subtask"
-                      className=" border-2 py-1 px-4 w-full my-2 text-sm rounded"
+                      className=" border-2 py-1 px-4 w-full my-2 text-base rounded"
                       value={subTaskTitle}
                       onFocus={onFocus}
                       onBlur={onBlur}

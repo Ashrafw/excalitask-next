@@ -22,6 +22,7 @@ export type MainTaskType = {
   isSubtask: boolean;
   theme: string;
   fontStyle: string;
+  prefix: string;
 };
 interface StateStore {
   isDarkMode: boolean;

@@ -38,8 +38,6 @@ const AddSingleTask = ({
   const handleSubmitAll = (e: any) => {
     e.preventDefault();
 
-    // const newTaskA = tasksMain.filter((itemTask) => itemTask.id === taskId)[0].taskList;
-    // const newTaskList = [];
     if (taskList.length > 0) {
       const newTask = tasksMain.map((itemTask) => {
         if (itemTask.id === taskId) {
@@ -48,6 +46,7 @@ const AddSingleTask = ({
           return itemTask;
         }
       });
+
       setTaskMain(newTask);
     }
     setAddSingleTask(false);

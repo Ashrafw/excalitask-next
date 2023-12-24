@@ -2,6 +2,7 @@
 import { MainTaskType, taskType, usePersistStore } from "@/app/lib/zustand";
 import { FaRegTrashAlt } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
+import { letters } from "@/app/helper/helper";
 
 const TaskItem = ({
   task,
@@ -13,6 +14,8 @@ const TaskItem = ({
   setIsFinishEdit,
   isThisTheEditedTask,
   isLastItem,
+  index,
+  prefix,
 }: {
   task: taskType;
   mainTaskId: string;
@@ -23,6 +26,8 @@ const TaskItem = ({
   setIsFinishEdit: React.Dispatch<React.SetStateAction<boolean>>;
   isThisTheEditedTask: boolean;
   isLastItem: boolean;
+  index: number;
+  prefix: string;
 }) => {
   const [titleEdit, setTitleEdit] = useState(task.title);
   const { tasksMain, setTaskMain } = usePersistStore();
@@ -82,6 +87,13 @@ const TaskItem = ({
     setTaskMain(newTask);
   };
 
+  const checkPrefix = (pref: string, index: number) => {
+    if (letters[index]) {
+      return `${letters[index]}. `;
+    } else {
+      return "";
+    }
+  };
   return (
     <div
       className={`flex gap-2 items-center py-[4px] px-2  cursor-pointer border-opacity-5  hover:bg-slate-400 hover:bg-opacity-10 border-b`}
@@ -101,7 +113,7 @@ const TaskItem = ({
           </button>
           <input
             type="text"
-            className=" w-full rounded px-2 border"
+            className=" w-full rounded px-2 border text-lg"
             value={titleEdit}
             onChange={(e) => setTitleEdit(e.target.value)}
           />
@@ -118,12 +130,19 @@ const TaskItem = ({
             />
           </div>
           <label
-            className={`w-full text-lg text-medium cursor-pointer  text-gray-900  ${
+            className={`w-full  text-lg cursor-pointer  text-gray-900  ${
               task.isComplete
-                ? "  line-through decoration-[2px] decoration-slate-800/25 text-gray-900/25"
+                ? "  decoration-[2px] decoration-slate-800/25 text-gray-900/25"
                 : " "
             } `}
           >
+            {`${
+              prefix === "numbers"
+                ? `${index + 1}. `
+                : prefix === "letters"
+                ? checkPrefix(prefix, index)
+                : ""
+            }`}
             {task.title}
           </label>
         </>

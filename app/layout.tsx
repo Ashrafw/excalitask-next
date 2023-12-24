@@ -1,31 +1,22 @@
 import type { Metadata } from "next";
-import {
-  Swanky_and_Moo_Moo,
-  Shadows_Into_Light_Two,
-  Architects_Daughter,
-  PT_Sans_Narrow,
-  Ubuntu,
-  PT_Sans,
-  Bodoni_Moda,
-  Rokkitt,
-  Gluten,
-  Expletus_Sans,
-  Edu_QLD_Beginner,
-  Poppins,
-} from "next/font/google";
+
 import "./globals.css";
 import {
-  architects,
-  swanky,
-  shadows,
   poppinsFont,
   rokkittFont,
-  glutenFont,
+  playpen,
+  mali,
+  ubuntu,
+  rubik,
+  raj,
+  mPlus,
+  orbit,
+  philosopher,
+  fahkwang,
+  upright,
+  lora,
+  marri,
 } from "./fonts/fonts";
-
-// const inter = Swanky_and_Moo_Moo({ subsets: ["latin"], weight: ["400"] });
-// const inter = Shadows_Into_Light_Two({ subsets: ["latin"], weight: ["400"] });
-const inter = Poppins({ subsets: ["latin"], weight: ["400"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -36,7 +27,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body
-        className={`${architects.variable} ${swanky.variable} ${shadows.variable}  ${rokkittFont.variable} ${glutenFont.variable} ${poppinsFont.variable} font-poppins`}
+        className={` ${rokkittFont.variable}  ${poppinsFont.variable} ${playpen.variable} ${playpen.variable} ${mali.variable} ${ubuntu.variable} ${rubik.variable}
+      ${raj.variable} ${mPlus.variable} ${orbit.variable} ${philosopher.variable} ${fahkwang.variable} ${upright.variable}
+       ${lora.variable} ${marri.variable} font-poppins`}
       >
         {children}
       </body>
