@@ -23,6 +23,11 @@ const TaskWithSubItem = ({
   theme,
   index,
   prefix,
+  withSubTask,
+  focusedSubtask,
+  setFocusedSubtask,
+  onFocusSubtask,
+  onBlurSubtask,
 }: {
   task: taskType;
   mainTaskId: string;
@@ -36,6 +41,11 @@ const TaskWithSubItem = ({
   theme: string;
   index: number;
   prefix: string;
+  withSubTask: boolean;
+  focusedSubtask: boolean;
+  setFocusedSubtask: React.Dispatch<React.SetStateAction<boolean>>;
+  onFocusSubtask: () => void;
+  onBlurSubtask: () => void;
 }) => {
   const [titleEdit, setTitleEdit] = useState(task.title);
   const { tasksMain, setTaskMain } = usePersistStore();
@@ -147,7 +157,7 @@ const TaskWithSubItem = ({
     <div className=" rounded border -mt-[2px] bg-slate-50 w-full ">
       <button
         className={`flex gap-2 ${theme} items- py-[6px] h-[43px] px-2 justify-between border-b w-full  hover:bg-opacity-10  ${
-          !isDropDown ? "bg-opacity-25" : " bg-opacity-25"
+          !isDropDown ? "bg-opacity-10" : " bg-opacity-10"
         }`}
         disabled={isFinishEdit && isThisTheEditedTask}
         onClick={() => setIsDropDown((prev) => !prev)}
@@ -171,7 +181,7 @@ const TaskWithSubItem = ({
           <div className={`flex w-full  cursor-pointer text-start`}>
             {/* <input type="checkbox" className=" m-2 my-[9px]" /> */}
             <div className=" h-[2px] w-[56px] cursor-pointer"></div>
-            <label className="w-full text-lg text-gray-900  cursor-pointer">
+            <label className="w-full text-lg text-gray-900  cursor-pointer ">
               {`${
                 prefix === "numbers"
                   ? `${index + 1}. `
@@ -186,13 +196,14 @@ const TaskWithSubItem = ({
         )}
         <div
           className={` flex justify-center items-center cursor-pointer p-2 rounded ${
-            isFinishEdit && isThisTheEditedTask ? " opacity-5 " : ""
+            isFinishEdit && isThisTheEditedTask ? "  " : ""
           }`}
+          onClick={() => setIsDropDown((prev) => !prev)}
         >
           {isDropDown ? (
             <button
-              disabled={isThisTheEditedTask && isFinishEdit}
-              // onClick={() => setIsDropDown(false)}
+            // disabled={isThisTheEditedTask && isFinishEdit}
+            // onClick={() => setIsDropDown(false)}
             >
               <IoIosArrowUp />
             </button>
@@ -221,21 +232,23 @@ const TaskWithSubItem = ({
                 doesItHaveSubtasks={task.isSubtask}
                 isThisTheEditedTask={isThisTheEditedTask}
                 isLastSubItem={task.subTaskList.length === i + 1}
+                prefix={checkPrefix(prefix, i)}
+                theme={theme}
               />
             ))
           : null}
-        {isFinishEdit && isThisTheEditedTask ? (
+        {isFinishEdit && isThisTheEditedTask && isDropDown ? (
           <form onSubmit={handleSubmitSubTask}>
-            <div className=" flex items-center gap-1 mb-2 p-1">
+            <div className=" flex items-center gap-1  p-1">
               <input
                 required
                 type="text"
                 placeholder="Add a subtask"
-                className=" border-2 py-1 px-4 w-full text-base rounded"
+                className=" border py-1 px-4 w-full text-base rounded"
                 value={subTaskTitle}
-                // onFocus={onFocus}
-                // onBlur={onBlur}
-                // autoFocus={focused}
+                onFocus={onFocusSubtask}
+                onBlur={onBlurSubtask}
+                autoFocus={focusedSubtask}
                 onChange={(e) => setSubTaskTitle(e.target.value)}
               />
               <button

@@ -15,6 +15,8 @@ const SubItem = ({
   doesItHaveSubtasks,
   isThisTheEditedTask,
   isLastSubItem,
+  prefix,
+  theme,
 }: {
   subTask: SubTaskType;
   mainTaskId: string;
@@ -26,6 +28,8 @@ const SubItem = ({
   doesItHaveSubtasks: boolean;
   isThisTheEditedTask: boolean;
   isLastSubItem: boolean;
+  prefix: string;
+  theme: string;
 }) => {
   const [titleSubEdit, setTitleSubEdit] = useState(subTask.title);
   const { tasksMain, setTaskMain } = usePersistStore();
@@ -121,11 +125,24 @@ const SubItem = ({
         return taskInner;
       }
     });
-    console.log("newTask", newTask);
     setTaskMain(newTask);
   };
-  const handleSubmitSubTask = (e: any) => {
-    e.preventDefault();
+  const handleAccent = () => {
+    if (theme === "bg-slate-700") {
+      return "accent-[#334155]";
+    } else if (theme === "bg-neutral-900") {
+      return "accent-[#171717]";
+    } else if (theme === "bg-cyan-800") {
+      return "accent-[#155E75]";
+    } else if (theme === "bg-emerald-700") {
+      return "accent-[#047857]";
+    } else if (theme === "bg-rose-900") {
+      return "accent-[#881337]";
+    } else if (theme === "bg-pink-700") {
+      return "accent-[#BE185E]";
+    } else {
+      return "accent-slate-700";
+    }
   };
   return (
     <div
@@ -159,7 +176,7 @@ const SubItem = ({
             <div className="flex items-center justify-center w-[30px] h-[30px] mr-[10px] ">
               <input
                 type="checkbox"
-                className=" h-[14px] w-[14px] mt-1 ml-1 p-0 m-0 accent-slate-600"
+                className={` h-[14px] w-[14px] mt-1 ml-1 p-0 m-0 ${handleAccent()}  border-4`}
                 checked={subTask.isComplete}
                 onChange={(e: any) => updateTaskCompletion(e.target.checked)}
               />

@@ -182,7 +182,7 @@ const AddTaskItem = ({
                       onChange={(e) => setSubTaskTitle(e.target.value)}
                     />
                     <button
-                      className={` ${theme} w-[40px] text-gray-100 text-base p-1 rounded h-[30px]  `}
+                      className={` ${theme} w-[40px] text-gray-100 text-base p-1 rounded h-[30px] flex items-center justify-center `}
                     >
                       <FaPlus />
                     </button>

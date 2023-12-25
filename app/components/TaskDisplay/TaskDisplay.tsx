@@ -30,6 +30,11 @@ const TaskDisplay = ({
   const [isFinishEdit, setIsFinishEdit] = useState(false);
   const [isSaveAllClick, setIsSaveAllClick] = useState(false);
   const [categoryEdit, setCategoryEdit] = useState(task.title);
+
+  const [focusedSubtask, setFocusedSubtask] = useState(false);
+  const onFocus = () => setFocusedSubtask(true);
+  const onBlur = () => setFocusedSubtask(false);
+
   const handleCategoryChange = () => {
     const newTask = tasksMain.map((taskInner) => {
       if (taskInner.id === editTaskId) {
@@ -127,6 +132,11 @@ const TaskDisplay = ({
                 theme={task.theme}
                 index={i}
                 prefix={task.prefix}
+                withSubTask={item.isSubtask}
+                focusedSubtask={focusedSubtask}
+                setFocusedSubtask={setFocusedSubtask}
+                onFocusSubtask={onFocus}
+                onBlurSubtask={onBlur}
               />
             ) : (
               <TaskItem
@@ -143,6 +153,10 @@ const TaskDisplay = ({
                 index={i}
                 prefix={task.prefix}
                 theme={task.theme}
+                focusedSubtask={focusedSubtask}
+                setFocusedSubtask={setFocusedSubtask}
+                onFocusSubtask={onFocus}
+                onBlurSubtask={onBlur}
               />
             );
           })}

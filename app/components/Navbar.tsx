@@ -33,17 +33,17 @@ const Navbar = ({
   return (
     <div>
       <div
-        className={`flex w-[95%] m-auto items-center justify-between my-4   ${
+        className={`flex w-[95%] m-auto items-center justify-center my-4   ${
           openAddTask ? "blur" : ""
         }`}
         ref={animationAlert}
       >
-        <MainMenu />
+        {/* <MainMenu /> */}
 
         {/* <div className={`  `}> */}
         <button
           onClick={() => {
-            if (tasksMain.length > 12) {
+            if (tasksMain.length > 2) {
               setShowAlert(true);
             } else {
               setOpenAddTask((prev) => !prev);
@@ -56,7 +56,6 @@ const Navbar = ({
           {showAlert && (
             <div className=" z-50 absolute top-full --translate-x-[10px] w-[220px] shadow-md border-slate-400 text-base rounded translate-y-[8px]">
               <div className=" rounded-lg  bg-slate-50 p-2">
-                {" "}
                 You can only have 3 main tasks.
               </div>
             </div>
@@ -66,7 +65,6 @@ const Navbar = ({
           <FaFont />
         </button> */}
         {/* </div> */}
-        <button>ds</button>
       </div>
 
       {openAddTask && <AddTaskForm setOpenAddTask={setOpenAddTask} />}

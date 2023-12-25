@@ -178,12 +178,15 @@ const AddSingleTask = ({
           </button>
         </form>
       </div>
-      <div className="flex flex-col gap-2 bg-white p-2 rounded" ref={animationNew}>
+      <div
+        className="flex flex-col gap-2 shadow  rounded border-2 mx-2 mb-2"
+        ref={animationNew}
+      >
         <div
-          className=" flex justify-between items-center gap-1 cursor-pointer p-1 px-2 rounded bg-gray-200 shadow"
+          className=" flex justify-between items-center gap-1 cursor-pointer p-1  rounded bg-gray-100 "
           onClick={() => setIsEditSettings((prev) => !prev)}
         >
-          <h1 className=" space-x-0">Customize settings</h1>
+          <h1 className=" pl-1">Customize settings</h1>
           <div className={` p-1 $bg-black/10 rounded`}>
             {isEditSettings ? (
               <button className={` p-1 bg-white/70 rounded`}>

@@ -20,6 +20,10 @@ const TaskItem = ({
   index,
   prefix,
   theme,
+  focusedSubtask,
+  setFocusedSubtask,
+  onFocusSubtask,
+  onBlurSubtask,
 }: {
   task: taskType;
   mainTaskId: string;
@@ -33,6 +37,10 @@ const TaskItem = ({
   index: number;
   prefix: string;
   theme: string;
+  focusedSubtask: boolean;
+  setFocusedSubtask: React.Dispatch<React.SetStateAction<boolean>>;
+  onFocusSubtask: () => void;
+  onBlurSubtask: () => void;
 }) => {
   const [actualSelectedTask, setActualSelectedTask] = useState(task);
   const [taskList, setTaskList] = useState([]);
@@ -40,8 +48,8 @@ const TaskItem = ({
   const [subTaskTitle, setSubTaskTitle] = useState("");
   const [titleEdit, setTitleEdit] = useState(task.title);
   const { tasksMain, setTaskMain } = usePersistStore();
-  const [focused, setFocused] = useState(false);
   const [openSubtask, setOpenSubtask] = useState(false);
+  const [focused, setFocused] = useState(false);
 
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
@@ -112,7 +120,7 @@ const TaskItem = ({
               ...item,
               isSubtask: true,
               subTaskList: [
-                ...item.subTaskList,
+                // ...item.subTaskList,
                 {
                   id: uuidv4(),
                   title: subTaskTitle,
@@ -196,7 +204,23 @@ const TaskItem = ({
 
     setTaskMain(newTask);
   };
-
+  const handleAccent = () => {
+    if (theme === "bg-slate-700") {
+      return "accent-[#334155]";
+    } else if (theme === "bg-neutral-900") {
+      return "accent-[#171717b2]";
+    } else if (theme === "bg-cyan-800") {
+      return "accent-[#155E75]";
+    } else if (theme === "bg-emerald-700") {
+      return "accent-[#047857]";
+    } else if (theme === "bg-rose-900") {
+      return "accent-[#881337]";
+    } else if (theme === "bg-pink-700") {
+      return "accent-[#BE185E]";
+    } else {
+      return "accent-slate-700";
+    }
+  };
   return (
     <div
       className={`flex gap-2 items-center py-[4px] px-2  cursor-pointer border-opacity-5  hover:bg-slate-400 hover:bg-opacity-10 border-b`}
@@ -224,7 +248,7 @@ const TaskItem = ({
 
             <button
               onClick={() => {
-                onFocus();
+                onFocusSubtask();
                 setOpenSubtask((prev) => !prev);
                 // setDropDown((prev) => !prev);
               }}
@@ -247,7 +271,7 @@ const TaskItem = ({
                 >
                   <FaRegTrashAlt />
                 </button>
-                <h2>{item.title}</h2>
+                <h2 className=" ">{item.title}</h2>
               </div>
             ))}
             {openSubtask && (
@@ -259,13 +283,13 @@ const TaskItem = ({
                     placeholder="Add a subtask"
                     className=" border-2 py-1 px-4 w-full text-base rounded"
                     value={subTaskTitle}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
-                    autoFocus={focused}
+                    onFocus={onFocusSubtask}
+                    onBlur={onBlurSubtask}
+                    autoFocus={focusedSubtask}
                     onChange={(e) => setSubTaskTitle(e.target.value)}
                   />
                   <button
-                    className={`  w-[40px] ${theme} text-gray-100 text-sm p-1 rounded h-[32px]  `}
+                    className={`  w-[40px] ${theme} text-gray-100 text-sm p-1 rounded h-[32px]  flex items-center justify-center `}
                   >
                     <FaPlus />
                   </button>
@@ -280,7 +304,7 @@ const TaskItem = ({
           <div className="flex items-center  cursor-pointer justify-center w-[30px] h-[30px] mr-[13px] ">
             <input
               type="checkbox"
-              className={` h-4 w-4 mt-1 ml-1 p-0 m-0 accent-slate-600`}
+              className={` h-4 w-4 mt-1 ml-1 p-0 m-0 accent-slate-60 ${handleAccent()}`}
               checked={task.isComplete}
               onChange={(e: any) => updateTaskCompletion(e.target.checked)}
             />

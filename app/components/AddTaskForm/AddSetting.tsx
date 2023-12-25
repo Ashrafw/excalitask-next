@@ -89,23 +89,22 @@ const AddSetting = ({
           >
             Font Style
           </button>
-          <button
+          {/* <button
             onClick={() => handleFont("font-rokkitt")}
             className={` font-rokkitt ${
               fontStyle === "font-rokkitt" ? " ring-2 ring-blue-500" : ""
             }  border rounded shadow-sm p-1 px-2 bg-zinc-100  `}
           >
             Font Style
-          </button>
-          {/*  */}
-          <button
+          </button> */}
+          {/* <button
             onClick={() => handleFont("font-ubuntu")}
             className={` font-ubuntu ${
               fontStyle === "font-ubuntu" ? " ring-2 ring-blue-500" : ""
             }  border rounded shadow-sm p-1 px-2 bg-zinc-100  `}
           >
             Font Style
-          </button>{" "}
+          </button>{" "} */}
           {/* <button
             onClick={() => handleFont("font-rubik")}
             className={` font-rubik ${
@@ -114,14 +113,14 @@ const AddSetting = ({
           >
             Font Style
           </button>{" "} */}
-          <button
+          {/* <button
             onClick={() => handleFont("font-raj")}
             className={` font-raj ${
               fontStyle === "font-raj" ? " ring-2 ring-blue-500" : ""
             }  border rounded shadow-sm p-1 px-2 bg-zinc-100  `}
           >
             Font Style
-          </button>{" "}
+          </button>{" "} */}
           <button
             onClick={() => handleFont("font-mplus")}
             className={` font-mplus ${
@@ -130,14 +129,14 @@ const AddSetting = ({
           >
             Font Style
           </button>{" "}
-          <button
+          {/* <button
             onClick={() => handleFont("font-orbit")}
             className={` font-orbit ${
               fontStyle === "font-orbit" ? " ring-2 ring-blue-500" : ""
             }  border rounded shadow-sm p-1 px-2 bg-zinc-100  `}
           >
             Font Style
-          </button>{" "}
+          </button>{" "} */}
           <button
             onClick={() => handleFont("font-philosopher")}
             className={` font-philosopher ${
@@ -146,22 +145,22 @@ const AddSetting = ({
           >
             Font Style
           </button>{" "}
-          <button
+          {/* <button
             onClick={() => handleFont("font-fahkwang")}
             className={` font-fahkwang ${
               fontStyle === "font-fahkwang" ? " ring-2 ring-blue-500" : ""
             }  border rounded shadow-sm p-1 px-2 bg-zinc-100  `}
           >
             Font Style
-          </button>{" "}
-          <button
+          </button>{" "} */}
+          {/* <button
             onClick={() => handleFont("font-upright")}
             className={` font-upright ${
               fontStyle === "font-upright" ? " ring-2 ring-blue-500" : ""
             }  border rounded shadow-sm p-1 px-2 bg-zinc-100  `}
           >
             Font Style
-          </button>{" "}
+          </button>{" "} */}
           <button
             onClick={() => handleFont("font-lora")}
             className={` font-lora ${
